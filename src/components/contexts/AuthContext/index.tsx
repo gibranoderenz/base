@@ -76,7 +76,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
         router.push("/");
       }
     } catch (err) {
-      toast.error("An error occurred. Please try again.");
     } finally {
     }
   };
