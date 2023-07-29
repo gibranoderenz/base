@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+Note: to use the deployed app, you will need to click the lock icon on the left of the URL, click `Site settings`, and allow `Insecure content`. This is because the deployed application is hosted with HTTPS, while the external API given by the TechnoScape team is hosted in HTTP.
+
 ## SupaBank
 
 AI-Powered Personal Finance Advisor adalah fitur inovatif yang menghubungkan nasabah dengan teknologi kecerdasan buatan (AI) untuk memberikan saran dan rekomendasi keuangan yang personal dan akurat. Dengan menggunakan data serta permintaan nasabah, AI bisa menganalisis informasi tersebut secara cermat dan menghasilkan strategi keuangan yang disesuaikan dengan kebutuhan dan tujuan individu.
