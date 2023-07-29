@@ -61,7 +61,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
 
   const getUser = async () => {
     try {
-      const { data } = await zaxios({ method: "GET", url: "/user/get" }, true);
+      const { data } = await zaxios({ method: "GET", url: "/user/get/" }, true);
       try {
         const res = await axios({
           url: "http://34.101.154.14:8175/hackathon/bankAccount/info",
