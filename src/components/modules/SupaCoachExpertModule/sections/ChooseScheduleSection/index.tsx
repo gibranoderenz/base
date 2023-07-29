@@ -134,12 +134,13 @@ export const ChooseScheduleSection = () => {
           </h3>
 
           <div className="flex items-center justify-between gap-6 text-[#455A64]">
-            <div className="rounded-full w-[50px] h-[50px]">
+            <div className="relative w-12 h-12 rounded-full overflow-hidden">
               <Image
                 src={profile_picture}
                 alt="Advisor profile picture"
-                width={50}
-                height={50}
+                layout="fill"
+                objectFit="cover"
+                className="absolute"
               />
             </div>
             <div className="flex flex-col gap-1">
