@@ -24,6 +24,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
+  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Appointment } from "./interface";
 import { toast } from "react-hot-toast";
@@ -218,7 +219,11 @@ export const ChooseScheduleSection = () => {
               className="w-full bg-core-yellow text-black hover:bg-light-yellow shadow-none"
               disabled={!selectedTime || isLoading}
             >
-              {isLoading ? <CgSpinner /> : "Confirm and Pay"}
+              {isLoading ? (
+                <CgSpinner className="animate-spin" size={20} />
+              ) : (
+                "Confirm and Pay"
+              )}
             </Button>
             <Button
               onClick={() => setPage("CHOOSE_ADVISOR")}
@@ -230,7 +235,7 @@ export const ChooseScheduleSection = () => {
           </div>
         </div>
 
-        <Dialog open={showSuccessModal}>
+        <Dialog open={showSuccessModal} onOpenChange={setShowSuccessModal}>
           <DialogContent className="sm:max-w-[420px] text-[#455A64]">
             <DialogHeader className="flex flex-col gap-2">
               <DialogTitle className="text-center">Confirmed!</DialogTitle>
