@@ -3,15 +3,32 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 import { BiChevronDown } from "react-icons/bi";
+import { IoMdAddCircle } from "react-icons/io";
 import { BsPersonVcardFill } from "react-icons/bs";
 import { PiPersonArmsSpreadFill } from "react-icons/pi";
 import { GoPersonFill } from "react-icons/go";
 import { MdEmail, MdDateRange } from "react-icons/md";
 import { useAuthContext } from "@/components/contexts";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@radix-ui/react-label";
+import { CgSpinner } from "react-icons/cg";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
 export const HomeModule = () => {
-  const { user } = useAuthContext();
+  const { user, getUser } = useAuthContext();
   const [expandProfile, setExpandProfile] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [amount, setAmount] = useState<string>("");
+  const [showTopUpModal, setShowTopUpModal] = useState<boolean>(false);
 
   function formatBirthDate(inputDate: string) {
     const month = inputDate.substring(2, 4);
@@ -26,6 +43,30 @@ export const HomeModule = () => {
       year: "numeric",
     });
   }
+
+  const addBalance = async () => {
+    try {
+      setIsLoading(true);
+      await axios({
+        method: "POST",
+        url: "http://34.101.154.14:8175/hackathon/bankAccount/addBalance",
+        data: {
+          receiverAccountNo: user?.account_no,
+          amount: parseInt(amount),
+        },
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
+      toast.success("Top up success!");
+      setShowTopUpModal(false);
+      await getUser();
+    } catch (err) {
+      toast.error("An error occured. Please try again.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   if (!user) {
     return (
@@ -77,6 +118,48 @@ export const HomeModule = () => {
               </span>
             </div>
           </div>
+
+          <Dialog open={showTopUpModal} onOpenChange={setShowTopUpModal}>
+            <DialogTrigger>
+              <div className="flex items-center gap-2 px-4 py-2 border-2 border-slate-200 w-fit rounded-lg cursor-pointer">
+                <IoMdAddCircle size={24} />
+                <span>Top Up</span>
+              </div>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Top up</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid grid-cols-4 items-center gap-4">
+                  <Label htmlFor="name" className="text-right">
+                    Value
+                  </Label>
+                  <Input
+                    onChange={(e) => setAmount(e.target.value)}
+                    id="amount"
+                    type="number"
+                    className="col-span-3"
+                    placeholder="500.000"
+                  />
+                </div>
+              </div>
+              <DialogFooter>
+                <Button
+                  type="submit"
+                  className="bg-core-yellow hover:bg-light-yellow text-black w-full"
+                  onClick={addBalance}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <CgSpinner className="animate-spin" size={20} />
+                  ) : (
+                    "Add Balance"
+                  )}
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </Dialog>
         </div>
 
         <div className="flex flex-col gap-4">
