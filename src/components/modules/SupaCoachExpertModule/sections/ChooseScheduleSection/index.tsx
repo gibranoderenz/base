@@ -133,7 +133,7 @@ export const ChooseScheduleSection = () => {
             Selected Financial Advisor
           </h3>
 
-          <div className="flex items-center justify-between gap-6 text-[#455A64]">
+          <div className="flex items-center gap-6 text-[#455A64]">
             <div className="relative w-12 h-12 rounded-full overflow-hidden">
               <Image
                 src={profile_picture}
