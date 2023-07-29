@@ -136,7 +136,7 @@ export const ChooseScheduleSection = () => {
           <div className="flex items-center justify-between gap-6 text-[#455A64]">
             <div className="rounded-full w-[50px] h-[50px]">
               <Image
-                src={"https://i.imgur.com/wcMxGgv.png"}
+                src={profile_picture}
                 alt="Advisor profile picture"
                 width={50}
                 height={50}

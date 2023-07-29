@@ -104,7 +104,6 @@ export const ChooseAdvisorSection = () => {
             ) : (
               advisors?.map((advisor, index) => {
                 const {
-                  user: { username },
                   current_role,
                   expertise: expertises,
                   full_name,
@@ -118,9 +117,9 @@ export const ChooseAdvisorSection = () => {
                     key={index}
                   >
                     <div className="flex items-center justify-between gap-6 text-[#455A64]">
-                      <div>
+                      <div className="rounded-full w-[50px] h-[50px]">
                         <Image
-                          src={"https://i.imgur.com/wcMxGgv.png"}
+                          src={profile_picture}
                           alt="Advisor profile picture"
                           width={50}
                           height={50}
