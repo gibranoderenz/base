@@ -282,7 +282,8 @@ export const ChooseScheduleSection = () => {
               </div>
             </div>
             <span className="text-center text-sm font-medium">
-              Your meeting has been saved to your calendar
+              Kindly check your email or Google Calendar to accept the
+              invitation for the appointment.
             </span>
 
             <DialogFooter>
