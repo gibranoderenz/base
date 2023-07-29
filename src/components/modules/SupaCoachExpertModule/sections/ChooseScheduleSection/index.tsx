@@ -64,6 +64,7 @@ export const ChooseScheduleSection = () => {
       setFinalAppointment({ id, meet_url, start_time, end_time });
       setShowSuccessModal(true);
     } catch (err) {
+      toast.error("An error occured. Please try again.");
     } finally {
       setIsLoading(false);
     }

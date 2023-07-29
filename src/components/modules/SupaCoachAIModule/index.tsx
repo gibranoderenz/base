@@ -1,31 +1,37 @@
 import { useAuthContext } from "@/components/contexts";
 import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
-import { useRouter } from "next/router";
 import React, { useState } from "react";
+import { toast } from "react-hot-toast";
 import { BiChevronLeft } from "react-icons/bi";
 import { IoMdSend } from "react-icons/io";
 
 export const SupaCoachAIModule = () => {
   const { zaxios } = useAuthContext();
-  const router = useRouter();
   const [prompt, setPrompt] = useState<string | null>(null);
   const [promptMessage, setPromptMessage] = useState<string | null>(null);
   const [result, setResult] = useState<string | null>(null);
+  const [language, setLanguage] = useState<"en" | "id">("id");
+
   const sendPrompt = async () => {
-    try {
-      setPromptMessage(prompt);
-      setResult(null);
-      const res = await zaxios({
-        method: "POST",
-        url: "/user/talk/",
-        data: {
-          user_prompt: prompt,
-        },
-      });
-      setResult(res.data.message);
-    } catch (err) {
-    } finally {
+    if (!!prompt && prompt !== "") {
+      try {
+        setPromptMessage(prompt);
+        setResult(null);
+        const res = await zaxios({
+          method: "POST",
+          url: "/user/talk/",
+          data: {
+            user_prompt: prompt,
+            language,
+          },
+        });
+        setResult(res.data.message);
+      } catch (err) {
+        toast.error("An error occurred. Please try again.");
+      } finally {
+      }
     }
   };
 
@@ -47,6 +53,17 @@ export const SupaCoachAIModule = () => {
           SupaCoach-AI does not save chat history
         </span>
 
+        <Tabs defaultValue={language} className="self-end pr-4">
+          <TabsList>
+            <TabsTrigger value="id" onClick={() => setLanguage("id")}>
+              Bahasa
+            </TabsTrigger>
+            <TabsTrigger value="en" onClick={() => setLanguage("en")}>
+              English
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+
         {!!promptMessage ? (
           <div className="w-1/2 bg-light-yellow rounded-tl-3xl rounded-b-3xl px-4 py-2 self-end mr-4">
             <span className="text-sm">{promptMessage}</span>
@@ -60,6 +77,7 @@ export const SupaCoachAIModule = () => {
         ) : null}
         <div className="flex items-center justify-between gap-4 fixed bottom-0 bg-white p-4 w-full sm:w-[440px]">
           <Input
+            value={prompt as string}
             placeholder="Write a question you are curious about..."
             onChange={(e) => {
               setPrompt(e.target.value);
@@ -72,9 +90,7 @@ export const SupaCoachAIModule = () => {
           />
           <button
             onClick={() => {
-              if (!!prompt) {
-                sendPrompt();
-              }
+              sendPrompt();
             }}
           >
             <IoMdSend size={24} />

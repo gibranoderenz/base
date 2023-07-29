@@ -28,6 +28,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       toast.success("Register successful!");
       router.push("/login");
     } catch (err) {
+      toast.error("An error occurred. Please try again.");
     } finally {
     }
   };
@@ -53,6 +54,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
       localStorage.setItem("token", res.data.access_token);
       setUser({ ...res.data.user, balance: res2.data.data.balance });
     } catch (err) {
+      toast.error("An error occurred. Please try again.");
     } finally {
     }
   };
@@ -60,16 +62,21 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
   const getUser = async () => {
     try {
       const { data } = await zaxios({ method: "GET", url: "/user/get" }, true);
-      const res = await axios({
-        url: "http://34.101.154.14:8175/hackathon/bankAccount/info",
-        method: "POST",
-        data: { accountNo: data.account_no },
-        headers: {
-          Authorization: `Bearer ${data.token}`,
-        },
-      });
-      setUser({ ...data, balance: res.data.data.balance });
+      try {
+        const res = await axios({
+          url: "http://34.101.154.14:8175/hackathon/bankAccount/info",
+          method: "POST",
+          data: { accountNo: data.account_no },
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        });
+        setUser({ ...data, balance: res.data.data.balance });
+      } catch (err) {
+        router.push("/");
+      }
     } catch (err) {
+      toast.error("An error occurred. Please try again.");
     } finally {
     }
   };

@@ -10,6 +10,7 @@ import {
   useSupaCoachExpertContext,
 } from "@/components/contexts";
 import { AdvisorProps } from "../../interface";
+import toast from "react-hot-toast";
 
 export const ChooseAdvisorSection = () => {
   const [prompt, setPrompt] = useState<string | null>(null);
@@ -35,6 +36,7 @@ export const ChooseAdvisorSection = () => {
         });
         setAdvisors(res.data.top_advisors);
       } catch (err) {
+        toast.error("An error occured. Please try again.");
       } finally {
         setIsLoading(false);
       }
