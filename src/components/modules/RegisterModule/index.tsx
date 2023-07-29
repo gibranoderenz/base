@@ -22,16 +22,25 @@ import {
   SelectGroup,
   SelectItem,
 } from "@/components/ui/select";
+import { useAuthContext } from "@/components/contexts";
 
 export const RegisterModule = () => {
+  const { register } = useAuthContext();
   const form = useForm<z.infer<typeof registerSchema>>({
     resolver: zodResolver(registerSchema),
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof registerSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof registerSchema>) => {
+    const [year, month, date] = values.birthDate.split("-");
+    const finalValues = {
+      ...values,
+      is_advisor: false,
+      gender: parseInt(values.gender),
+      birthDate: `${date}${month}${year}`,
+    };
+    await register(finalValues);
+  };
 
   return (
     <section className="w-full flex flex-col gap-4 px-6 py-8">
@@ -71,7 +80,7 @@ export const RegisterModule = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="loginPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
@@ -88,7 +97,7 @@ export const RegisterModule = () => {
             />
             <FormField
               control={form.control}
-              name="accountNo"
+              name="ktpId"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>KTP</FormLabel>

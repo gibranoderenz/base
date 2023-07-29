@@ -14,16 +14,18 @@ import {
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { loginSchema } from "@/components/schemas/login.schema";
+import { useAuthContext } from "@/components/contexts";
 
 export const LoginModule = () => {
+  const { login } = useAuthContext();
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {},
   });
 
-  function onSubmit(values: z.infer<typeof loginSchema>) {
-    console.log(values);
-  }
+  const onSubmit = async (values: z.infer<typeof loginSchema>) => {
+    await login(values);
+  };
 
   return (
     <section className="w-full flex flex-col items-center justify-center gap-4 px-6 py-8 min-h-screen">
@@ -42,7 +44,7 @@ export const LoginModule = () => {
                 <FormItem>
                   <FormLabel>Username</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="arkan" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -50,12 +52,16 @@ export const LoginModule = () => {
             />
             <FormField
               control={form.control}
-              name="password"
+              name="loginPassword"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" type="password" {...field} />
+                    <Input
+                      placeholder="Enter your password..."
+                      type="password"
+                      {...field}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -67,7 +73,7 @@ export const LoginModule = () => {
                 type="submit"
                 className="bg-core-yellow hover:bg-light-yellow text-black w-full"
               >
-                Create Account
+                Login
               </Button>
               <div className="flex items-center gap-2 text-sm">
                 <span>Don&apos;t have an account?</span>

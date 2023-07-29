@@ -1,4 +1,3 @@
-import { useAuthContext } from "@/components/contexts";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -8,12 +7,27 @@ import { BsPersonVcardFill } from "react-icons/bs";
 import { PiPersonArmsSpreadFill } from "react-icons/pi";
 import { GoPersonFill } from "react-icons/go";
 import { MdEmail, MdDateRange } from "react-icons/md";
+import { useAuthContext } from "@/components/contexts";
 
 export const HomeModule = () => {
   const { user } = useAuthContext();
   const [expandProfile, setExpandProfile] = useState<boolean>(false);
 
-  if (user) {
+  function formatBirthDate(inputDate: string) {
+    const month = inputDate.substring(2, 4);
+    const day = parseInt(inputDate.substring(0, 2));
+    const year = parseInt(inputDate.substring(4));
+
+    const date = new Date(year, parseInt(month, 10) - 1, day);
+
+    return date.toLocaleDateString("en-US", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric",
+    });
+  }
+
+  if (!user) {
     return (
       <section className="text-center min-h-screen flex flex-col items-center justify-center gap-2 py-8 px-4">
         <div className="h-full flex flex-col items-center justify-center">
@@ -58,7 +72,9 @@ export const HomeModule = () => {
             <span>Available balance</span>
             <div className="flex items-start gap-2 text-[#455A64]">
               <span className="text-lg">IDR</span>
-              <span className="text-2xl font-semibold">2,121,123</span>
+              <span className="text-2xl font-semibold">
+                {user?.balance.toLocaleString("en-US")}
+              </span>
             </div>
           </div>
         </div>
@@ -170,28 +186,30 @@ export const HomeModule = () => {
                     <GoPersonFill size={20} className="text-[#F5A35C]" />{" "}
                     Username
                   </span>
-                  <span className="text-sm">Arkan Gaming</span>
+                  <span className="text-sm">{user.username}</span>
                 </div>
                 <div className="border-t-2 border-gray-300 w-full flex items-center justify-between px-4 pt-4">
                   <span className="text-sm flex items-center gap-2 font-medium">
                     <MdEmail size={20} className="text-[#F5A35C]" />
                     Email
                   </span>
-                  <span className="text-sm">Arkan Gaming</span>
+                  <span className="text-sm">{user.email}</span>
                 </div>
                 <div className="border-t-2 border-gray-300 w-full flex items-center justify-between px-4 pt-4">
                   <span className="text-sm flex items-center gap-2 font-medium">
                     <MdDateRange size={20} className="text-[#F5A35C]" />
                     Birth Date
                   </span>
-                  <span className="text-sm">Arkan Gaming</span>
+                  <span className="text-sm">
+                    {formatBirthDate(user.birth_date)}
+                  </span>
                 </div>
                 <div className="border-t-2 border-gray-300 w-full flex items-center justify-between px-4 pt-4">
                   <span className="text-sm flex items-center gap-2 font-medium">
                     <BsPersonVcardFill size={20} className="text-[#F5A35C]" />
                     KTP ID
                   </span>
-                  <span className="text-sm">Arkan Gaming</span>
+                  <span className="text-sm">{user.ktp_id}</span>
                 </div>
                 <div className="border-t-2 border-gray-300 w-full flex items-center justify-between px-4 pt-4">
                   <span className="text-sm flex items-center gap-2 font-medium">
@@ -201,7 +219,9 @@ export const HomeModule = () => {
                     />
                     Gender
                   </span>
-                  <span className="text-sm">Arkan Gaming</span>
+                  <span className="text-sm">
+                    {user.gender === 0 ? "Male" : "Female"}
+                  </span>
                 </div>
               </>
             ) : null}
