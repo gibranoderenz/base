@@ -102,7 +102,7 @@ export const HomeModule = () => {
       <div className="w-full h-[200px] bg-[#FFBE00] text-white flex items-end">
         <div className="p-8">
           <h1 className="text-lg">Welcome to SupaBank,</h1>
-          <h2 className="font-bold text-4xl">{user?.username}</h2>
+          <h2 className="font-bold text-3xl">{user?.username}</h2>
         </div>
       </div>
       <div className="rounded-full w-[220px] h-[220px] bg-[#FFF082]/50 absolute top-10 -right-20" />
