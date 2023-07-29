@@ -11,6 +11,7 @@ export interface AuthContextInterface {
   setUser: React.Dispatch<SetStateAction<User | null>>;
   register: any;
   login: any;
+  getUser: any;
 }
 
 export interface User {

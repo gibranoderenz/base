@@ -12,4 +12,4 @@ export interface SupaCoachExpertProviderProps {
   children: ReactNode;
 }
 
-export type PageType = "CHOOSE_ADVISOR" | "CHOOSE_SCHEDULE" | "CONFIRMED";
+export type PageType = "CHOOSE_ADVISOR" | "CHOOSE_SCHEDULE";

@@ -13,9 +13,9 @@ export const useSupaCoachExpertContext = () =>
 export const SupaCoachExpertProvider: React.FC<
   SupaCoachExpertProviderProps
 > = ({ children }) => {
-  const [page, setPage] = useState<
-    "CHOOSE_ADVISOR" | "CHOOSE_SCHEDULE" | "CONFIRMED"
-  >("CHOOSE_ADVISOR");
+  const [page, setPage] = useState<"CHOOSE_ADVISOR" | "CHOOSE_SCHEDULE">(
+    "CHOOSE_ADVISOR"
+  );
   const [selectedAdvisor, setSelectedAdvisor] = useState<AdvisorProps | null>(
     null
   );

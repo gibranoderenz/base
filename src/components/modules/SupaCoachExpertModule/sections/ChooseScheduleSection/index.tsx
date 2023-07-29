@@ -30,7 +30,7 @@ import { Appointment } from "./interface";
 import { toast } from "react-hot-toast";
 
 export const ChooseScheduleSection = () => {
-  const { user } = useAuthContext();
+  const { user, getUser } = useAuthContext();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const { selectedAdvisor, setPage } = useSupaCoachExpertContext();
   const { zaxios } = useAuthContext();
@@ -64,6 +64,7 @@ export const ChooseScheduleSection = () => {
       } = data;
       setFinalAppointment({ id, meet_url, start_time, end_time });
       setShowSuccessModal(true);
+      await getUser();
     } catch (err) {
       toast.error("An error occured. Please try again.");
     } finally {

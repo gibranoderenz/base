@@ -102,6 +102,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({
     });
   };
 
-  const value = { zaxios, user, setUser, register, login };
+  const value = { zaxios, user, setUser, register, login, getUser };
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
