@@ -240,10 +240,8 @@ export const ChooseScheduleSection = () => {
           <DialogContent className="sm:max-w-[420px] text-[#455A64]">
             <DialogHeader className="flex flex-col gap-2">
               <DialogTitle className="text-center">Confirmed!</DialogTitle>
-              <DialogDescription>
-                You have successfully booked the appointment. Here are your
-                meeting details (by the way, it has already been saved to your
-                calendar!):
+              <DialogDescription className="font-medium">
+                Your meeting details:
               </DialogDescription>
             </DialogHeader>
 
@@ -256,7 +254,7 @@ export const ChooseScheduleSection = () => {
                 quality={100}
               />
 
-              <div>
+              <div className="flex flex-col gap-2">
                 <div className="flex items-center gap-2">
                   <span className="font-semibold text-sm">
                     {finalAppointment?.meet_url.replace("https://", "")}
@@ -283,6 +281,9 @@ export const ChooseScheduleSection = () => {
                 </div>
               </div>
             </div>
+            <span className="text-center text-sm font-medium">
+              Your meeting has been saved to your calendar
+            </span>
 
             <DialogFooter>
               <Link href={"/"} className="w-full">
